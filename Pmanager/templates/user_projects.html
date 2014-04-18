@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}User projects{% endblock %}
+
+{% block action %}User {{ request.user.username }} projects{% endblock %}
+
+{% block content %}
+<table class="table table-striped">
+    <tr>
+        <td>Project name</td>
+    </tr>
+    {% for p in project %}
+        <tr>
+            <td><a href="edit/{{ p.id }}">{{ p.name }}</a></td>
+        </tr>
+    {% endfor %}
+
+</table>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Create new user{% endblock %}
+
+{% block action %}Create new user{% endblock %}
+
+{% block content %}
+<form style="text-align:right;width:630px" action="{% url 'create' %}" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit" />
+</form>
+{% endblock %}
+

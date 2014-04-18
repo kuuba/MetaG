@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Edit project{% endblock %}
+
+{% block action %}Edit project {{ project.name }}{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit" />
+</form>
+<br>
+<form action="{% url 'delproject' project.id %}" method="post">{% csrf_token %}
+    <input type="submit" value="Delete project" />
+</form> 
+<form action="{% url 'upload_js' project.id %}" method="post">{% csrf_token %}
+    <input type="submit" value="Upload files" />
+</form>
+
+{% endblock %}
