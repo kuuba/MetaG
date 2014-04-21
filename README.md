@@ -12,7 +12,12 @@ You need to have Python 3 installed.
 sudo pip3 install Django==1.6.2
 ```
 
-2.  Start Metag
+1.  Setup database
+```
+python3 manage.py syncdb
+```
+
+1. Start server
 ```
 python3 manage.py runserver
 ```
