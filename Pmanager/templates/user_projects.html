@@ -1,19 +1,33 @@
 {% extends "base.html" %}
 
+{% load staticfiles %}
+
 {% block title %}User projects{% endblock %}
 
 {% block action %}User {{ request.user.username }} projects{% endblock %}
 
+{% block scripts %}
+{% endblock %}
+
 {% block content %}
 <table class="table table-striped">
     <tr>
-        <td>Project name</td>
+        <td>Project name</td><td></td>
     </tr>
-    {% for p in project %}
-        <tr>
-            <td><a href="edit/{{ p.id }}">{{ p.name }}</a></td>
-        </tr>
-    {% endfor %}
-
+            {% for p in project %}
+                <tr>
+                    <td><img src="{% static 'Pmanager/icons/blue-bullet.gif' %}" />
+                        <a href="edit/{{ p.id }}" id="pover" data-container="body" data-toggle="popover" data-placement="right" title="ID: {{ p.id }}" 
+                            data-content="<b>Nimi:</b> {{ p.name }}<br><b>Omanik:</b> {{ p.owner }}<br><b>Kuupäev:</b> {{ p.creation_date }}">{{ p.name }}</a></td>
+                </tr>
+            {% endfor %}
 </table>
+{% endblock %}
+{% block endscripts %}
+<script>
+$(document).ready(function(){
+    $("#ttip").tooltip();
+    $("a").popover({ trigger: 'hover focus' , html: true});
+});
+</script>
 {% endblock %}

@@ -19,6 +19,7 @@ from .forms import UploadFileForm, CreateProjectForm, EditProjectForm
 import os
 
 # Create your views here.
+
 @login_required
 def user_projects(request):
     #    return render(request, 'user_projects.html', {'projecd_ID': project})
@@ -36,7 +37,7 @@ def create_project(request):
             name = form.cleaned_data['name']
             p = Project.objects.create(name = name, owner_id = request.user.id)
             p.save()
-            return HttpResponseRedirect(reverse('upload_js', args=(p.id,)))
+            return HttpResponseRedirect(reverse('upload', args=(p.id,)))
     else:
         form = CreateProjectForm()
     return render(request, 'project_create.html', {
