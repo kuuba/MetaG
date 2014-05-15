@@ -17,16 +17,23 @@ TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '1thwl*nr&*uud_c-(7ediv@a#-i+$d6be=$ioe61@=8d(#oh4x'
+# SECRET_KEY should be set using environment variable in production!
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+        '.ee.',
+        ]
 
+SESSION_COOKIE_SECURE = True
+
+ADMINS = (
+        ('MetaG admin', 'metag@moonfish.ttu.ee'),
+        )
 
 # Application definition
 
@@ -87,14 +94,27 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
             os.path.join(BASE_DIR, "static"),
-                '/var/www/static/',
+# For use with apache at deployment
+#                '/var/www/MetaG/static/',
                 )
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-            'django.core.context_processors.request',
-            'django.contrib.auth.context_processors.auth',
-            )
+# Send to Umanager's login view every time @login_required view is
+# accessed without authorisation.
 
 LOGIN_URL='/user/login'
+
+# resumable upload specific settings
+
 FILE_UPLOAD_MAX_MEMORY_SIZE=262144
 FILE_UPLOAD_TEMP_DIR=os.path.join(BASE_DIR, 'files/tmp')
+
+# When 'DEV_METAG' is set in ~/.bashrc , override some settings with
+# settings_dev.py as well as add some debuging and other useful stuff
+# for development. Naturally, settings_dev.py is excluded from repository
+# commit.
+
+if os.environ.get('DEV_METAG', None):
+    try:
+        from MetaG.settings_dev import *
+    except ImportError:
+        pass
