@@ -12,4 +12,5 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^user/', include('Umanager.urls')),
     url(r'^projects/', include('Pmanager.urls')),
+    url(r'^upload/', include('fileupload.urls')),
 )

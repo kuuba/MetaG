@@ -10,6 +10,7 @@ class Project(models.Model):
     ## probably requires import from somewhere (Authentication)
     ##project_owner = models.CharField(max_length=30)
     creation_date = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
         return self.name
 

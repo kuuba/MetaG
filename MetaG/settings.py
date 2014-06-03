@@ -38,6 +38,7 @@ ADMINS = (
 # Application definition
 
 INSTALLED_APPS = (
+    'fileupload',
     'jquery',
     'Umanager',
     'Pmanager',
@@ -104,9 +105,15 @@ STATICFILES_DIRS = (
 LOGIN_URL='/user/login'
 
 # resumable upload specific settings
+# !!! Check if we still want to preserve these
 
-FILE_UPLOAD_MAX_MEMORY_SIZE=262144
-FILE_UPLOAD_TEMP_DIR=os.path.join(BASE_DIR, 'files/tmp')
+# FILE_UPLOAD_MAX_MEMORY_SIZE=262144
+# FILE_UPLOAD_TEMP_DIR=os.path.join(BASE_DIR, 'files/tmp')
+
+# Defined for 'fileupload' - we might change these soon
+
+MEDIA_URL='/media/'
+MEDIA_ROOT=os.path.join(BASE_DIR, "media")
 
 # When 'DEV_METAG' is set in ~/.bashrc , override some settings with
 # settings_dev.py as well as add some debuging and other useful stuff
