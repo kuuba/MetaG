@@ -18,6 +18,7 @@ from django.views.decorators.csrf import csrf_protect
 
 class UploadCreateView(CreateView):
     model = Upload
+    fields = ['file', 'slug']
 
 #    @sensitive_post_parameters()
 #    @csrf_protect
@@ -27,6 +28,7 @@ class UploadCreateView(CreateView):
         return super(UploadCreateView, self).dispatch(*args, **kwargs)
 
     def form_valid(self, form):
+        form.instance.owner = self.request.user
         self.object = form.save()
         files = [serialize(self.object)]
         data = {'files': files}

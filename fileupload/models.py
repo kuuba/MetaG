@@ -12,7 +12,7 @@ class Upload(models.Model):
     """
     file = models.FileField(upload_to="uploads")
     slug = models.SlugField(max_length=50, blank=True)
-#    owner = models.ForeignKey(User)
+    owner = models.ForeignKey(User)
     creation_date = models.DateTimeField(auto_now_add=True)
     change_date = models.DateTimeField(auto_now=True)
 
