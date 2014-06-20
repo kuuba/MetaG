@@ -9,6 +9,9 @@ from django.views.decorators.debug import sensitive_post_parameters
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 
+from django.core.exceptions import ObjectDoesNotExist
+
+
 # Create your views here.
 
 class UserCreateForm(forms.Form):
@@ -27,9 +30,12 @@ class UserCreateForm(forms.Form):
         email = cleaned_data.get("email")
         if password != password_reentry:
             raise forms.ValidationError("Passwords don't match!")
-        user = User.objects.get(email = email)
-        if user:
+        try:
+            user = User.objects.get(email = email)
+#            if user:
             raise forms.ValidationError("Email already registered! Please use password recovery if You can't recall Your password.")
+        except ObjectDoesNotExist:
+            pass
         return cleaned_data
 
 @sensitive_post_parameters()

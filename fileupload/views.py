@@ -1,4 +1,3 @@
-# encoding: utf-8
 from django.views.generic import CreateView, DeleteView, ListView
 from .models import Upload
 from .response import JSONResponse, response_mimetype
@@ -20,10 +19,10 @@ class UploadCreateView(CreateView):
     model = Upload
     fields = ['file', 'slug']
 
-#    @sensitive_post_parameters()
-#    @csrf_protect
-#    @never_cache
     @method_decorator(login_required)
+    @method_decorator(never_cache)
+    @method_decorator(sensitive_post_parameters())
+    @method_decorator(csrf_protect)
     def dispatch(self, *args, **kwargs):
         return super(UploadCreateView, self).dispatch(*args, **kwargs)
 
@@ -36,13 +35,20 @@ class UploadCreateView(CreateView):
         response['Content-Disposition'] = 'inline; filename=files.json'
         return response
 
+"""
+ToDo:
+    genereerida viisakas error (404) kui mingi tont üritab võõra id-ga faili kustutada
+"""
 
 class UploadDeleteView(DeleteView):
     model = Upload
 
-#    @sensitive_post_parameters()
-#    @csrf_protect
-#    @never_cache
+    @method_decorator(login_required)
+    @method_decorator(never_cache)
+    @method_decorator(csrf_protect)
+    def dispatch(self, *args, **kwargs):
+        return super(UploadDeleteView, self).dispatch(*args, **kwargs)
+
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
         self.object.delete()
@@ -54,11 +60,14 @@ class UploadDeleteView(DeleteView):
 class UploadListView(ListView):
     model = Upload
 
-#    @sensitive_post_parameters()
-#    @csrf_protect
-#    @never_cache
+    @method_decorator(login_required)
+    @method_decorator(never_cache)
+    @method_decorator(csrf_protect)
+    def dispatch(self, *args, **kwargs):
+        return super(UploadListView, self).dispatch(*args, **kwargs)
+
     def render_to_response(self, context, **response_kwargs):
-        files = [ serialize(p) for p in self.get_queryset() ]
+        files = [ serialize(p) for p in self.get_queryset().filter(owner=self.request.user) ]
         data = {'files': files}
         response = JSONResponse(data, mimetype=response_mimetype(self.request))
         response['Content-Disposition'] = 'inline; filename=files.json'

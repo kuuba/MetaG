@@ -11,7 +11,7 @@ from django.views.decorators.debug import sensitive_post_parameters
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 
-from Pmanager.models import Project, SequenceFile
+from Pmanager.models import Project, ProjectFileTable
 
 from django.shortcuts import render_to_response
 from .forms import UploadFileForm, CreateProjectForm, EditProjectForm

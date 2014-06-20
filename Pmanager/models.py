@@ -14,6 +14,12 @@ class Project(models.Model):
     def __str__(self):
         return self.name
 
+
+class ProjectFileTable(models.Model):
+    project = models.ForeignKey(Project)
+    fileid = models.IntegerField()
+
+"""
 class SequenceFile(models.Model):
     def file_hash(file_name):
         BLOCKSIZE = 65536
@@ -39,3 +45,4 @@ class SequenceRun(models.Model):
     sequencing_no = models.IntegerField()
     run_state = models.CharField(max_length=8)
     output_file = models.FilePathField()
+"""
