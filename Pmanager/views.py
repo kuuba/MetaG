@@ -37,7 +37,7 @@ def create_project(request):
             name = form.cleaned_data['name']
             p = Project.objects.create(name = name, owner_id = request.user.id)
             p.save()
-            return HttpResponseRedirect(reverse('upload', args=(p.id,)))
+            return HttpResponseRedirect(reverse('upload-new', args=(p.id,)))
     else:
         form = CreateProjectForm()
     return render(request, 'project_create.html', {

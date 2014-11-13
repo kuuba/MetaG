@@ -14,6 +14,7 @@ from django.views.decorators.debug import sensitive_post_parameters
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 
+from Pmanager.models import Project
 
 class UploadCreateView(CreateView):
     model = Upload
@@ -28,6 +29,7 @@ class UploadCreateView(CreateView):
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
+        form.instance.project = Project.objects.get(id = self.kwargs['project'])
         self.object = form.save()
         files = [serialize(self.object)]
         data = {'files': files}

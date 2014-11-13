@@ -1,6 +1,6 @@
-# encoding: utf-8
 from django.db import models
 from django.contrib.auth.models import User
+from  Pmanager.models import Project
 
 
 class Upload(models.Model):
@@ -13,6 +13,7 @@ class Upload(models.Model):
     file = models.FileField(upload_to="uploads")
     slug = models.SlugField(max_length=50, blank=True)
     owner = models.ForeignKey(User)
+    project = models.ForeignKey(Project)
     creation_date = models.DateTimeField(auto_now_add=True)
     change_date = models.DateTimeField(auto_now=True)
 

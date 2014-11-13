@@ -13,7 +13,7 @@
 <form action="{% url 'delproject' project.id %}" method="post">{% csrf_token %}
     <input type="submit" value="Delete project" />
 </form> 
-<form action="{% url 'upload' project.id %}" method="post">{% csrf_token %}
+<form action="{% url 'upload-new' user.id project.id %}" method="post">{% csrf_token %}
     <input type="submit" value="Upload files" />
 </form>
 
